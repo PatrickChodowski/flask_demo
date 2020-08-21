@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="predict_form">
+
+    <form action="{{ url_for('index_oblicz') }}" method="post" novalidate>
+
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+
+        <p>
+            {{ form.bike.label }}<br>
+            {{ form.bike() }}
+            {% for error in form.bike.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            {{ form.ilosc.label }}<br>
+            {{ form.ilosc() }}
+            {% for error in form.ilosc.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+       <p>{{ form.submit() }}</p>
+    </form>
+</section>
+
+{% endblock %}

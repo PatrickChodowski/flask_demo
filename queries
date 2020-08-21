@@ -1,0 +1,19 @@
+CREATE DATABASE bikes;
+
+
+\c bikes
+
+
+rowery:
+CREATE TABLE rowery (id serial PRIMARY KEY, nazwa VARCHAR(255), cena FLOAT );
+INSERT INTO rowery (nazwa, cena) VALUES ('orbea', 1000);
+INSERT INTO rowery (nazwa, cena) VALUES ('specialized', 2000);
+INSERT INTO rowery (nazwa, cena) VALUES ('trek', 3000);
+INSERT INTO rowery (nazwa, cena) VALUES ('pinarello', 2500);
+INSERT INTO rowery (nazwa, cena) VALUES ('btwin', 100);
+
+transakcje:
+CREATE TABLE transakcje ( id serial PRIMARY KEY,  data VARCHAR(10), id_rower INT,  wartosc FLOAT, ilosc INT);
+
+widok:
+CREATE VIEW dzienna AS SELECT sum(wartosc) AS cala_wartosc FROM transakcje;

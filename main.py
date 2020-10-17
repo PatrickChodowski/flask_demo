@@ -6,33 +6,45 @@ from wtforms.validators import DataRequired, NumberRange
 import pandas as pd
 import datetime as dt
 
-
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-connection = pg.connect(user="postgres",
-                              password="postgres",
-                              host="127.0.0.1",
-                              port="5432",
-                              database="postgres")
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+# connection = pg.connect(user="postgres",
+#                               password="postgres",
+#                               host="127.0.0.1",
+#                               port="5432",
+#                               database="postgres")
+#
+# cur = connection.cursor()
+# cur.execute('SELECT * FROM rowery;')
+# rower_data = cur.fetchall()
+# rower_df = pd.DataFrame(rower_data, columns=['id', 'nazwa', 'cena'])
 
-cur = connection.cursor()
-cur.execute('SELECT * FROM rowery;')
-rower_data = cur.fetchall()
-rower_df = pd.DataFrame(rower_data, columns=['id', 'nazwa', 'cena'])
 
-
-class ModelForm(FlaskForm):
-    ilosc = IntegerField('Ilosc', [NumberRange(min=0, max=5)])
-    bike = SelectField('Rower', choices=rower_df['nazwa'].to_list(),
-                       validators=[DataRequired()])
-    submit = SubmitField('Kup')
+### TO JEST BAZA DANYCH:
+rower_df = pd.DataFrame({'pochodzenie': ['POLSKA!', 'POLSKA!', 'lamusy', 'lamusy', 'lamusy'],
+                         'rower': ['romet', 'kross', 'merida', 'scott', 'specialized']})
 
 
 
 @app.route('/')
 def index():
-    form = ModelForm()
-    return render_template('index.html', form=form)
+    return render_template('index.html')
+
+
+@app.route('/pochodzenie', methods=['POST'])
+def pochodzenie():
+    pochodzenie_options = ';'.join(list(rower_df['pochodzenie'].unique()))
+    return pochodzenie_options
+
+
+@app.route('/rowery', methods=['POST'])
+def rowery():
+    p_arg = request.args.get('pochodzenie')
+    rowery_options = ';'.join(list(rower_df.loc[rower_df['pochodzenie'] == p_arg]['rower'].unique()))
+    return rowery_options
+
+
 
 @app.route('/index_oblicz', methods=['POST'])
 def index_oblicz():
@@ -57,6 +69,6 @@ def index_oblicz():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, port=5003)
+    app.run(debug=True, port=5010)
 
 

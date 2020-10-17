@@ -1,32 +1,52 @@
+<html>
+    <head>
+            <title>
+                RowerPol
+            </title>
+         <link rel="stylesheet" href="static/styles.css">
 
-{% extends "base.html" %}
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li class="logo"><a href="/">RowerPol</a></li>
+                    <!--li><a href="/#about_me">About me</a></li-->
+                    <!--li><a href="/#about_project">About project</a></li-->
+                </ul>
+         </nav>
+        </header>
 
-{% block content %}
+<div id="ziobro">
+    ty kurwo przestan mi rodzine
+</div>
 
-<section class="predict_form">
 
-    <form action="{{ url_for('index_oblicz') }}" method="post" novalidate>
 
-        {{ form.hidden_tag() }}
-        {{ form.csrf_token }}
 
-        <p>
-            {{ form.bike.label }}<br>
-            {{ form.bike() }}
-            {% for error in form.bike.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
 
-        <p>
-            {{ form.ilosc.label }}<br>
-            {{ form.ilosc() }}
-            {% for error in form.ilosc.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-       <p>{{ form.submit() }}</p>
-    </form>
-</section>
 
-{% endblock %}
+
+<div class="form_general">
+
+     <select name="pochodzenie" id="form_pochodzenie">
+<!--          <option value="polska">POLSKA!</option>-->
+<!--          <option value="lamusy" >lamusy</option>-->
+    </select>
+    <br> <br>
+
+    <select name="rowery" id="form_rowery">
+    </select> <br> <br>
+
+    <button type="button" id="add_rowery">Add</button>
+
+</div>
+
+
+<div id="dupa">
+    ty kurwo przestan mi rodzine
+</div>
+
+     <script src="static/script.js"></script>
+    </body>
+</html>
